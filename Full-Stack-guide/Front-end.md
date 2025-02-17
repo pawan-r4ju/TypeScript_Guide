@@ -1,179 +1,38 @@
-# TYPESCRIPT SYNTAX REFERENCE (FRONTEND)
+# TypeScript Topics for Frontend Development
 
-## 1. VARIABLES & DATA TYPES
-### Purpose: Declaring variables with type safety.
-```typescript
-let message: string = "Hello, TypeScript";
-let count: number = 10;
-let isActive: boolean = true;
-let numbers: number[] = [1, 2, 3];
-let tuple: [string, number] = ["Alice", 30];
-let user: object = { name: "John", age: 25 };
-let anything: any = "Could be anything";
-let unknownType: unknown = "Can be checked later";
-```
-
-## 2. FUNCTIONS
-### Purpose: Define reusable blocks of code.
-```typescript
-function greet(name: string): string {
-    return `Hello, ${name}`;
-}
-const sum = (a: number, b: number): number => a + b;
-```
-
-## 3. INTERFACES
-### Purpose: Define the shape of an object.
-```typescript
-interface User {
-    name: string;
-    age: number;
-}
-let user1: User = { name: "Alice", age: 30 };
-```
-
-## 4. CLASSES
-### Purpose: Define reusable object structures.
-```typescript
-class Person {
-    name: string;
-    constructor(name: string) {
-        this.name = name;
-    }
-    greet(): string {
-        return `Hello, my name is ${this.name}`;
-    }
-}
-const person1 = new Person("Alice");
-console.log(person1.greet());
-```
-
-## 5. GENERICS
-### Purpose: Create reusable components that work with multiple types.
-```typescript
-function identity<T>(arg: T): T {
-    return arg;
-}
-console.log(identity<string>("Hello"));
-console.log(identity<number>(42));
-```
-
-## 6. ENUMS
-### Purpose: Define a set of named constants.
-```typescript
-enum Color {
-    Red, Green, Blue
-}
-let favoriteColor: Color = Color.Green;
-```
-
-## 7. TYPE ALIASES & UNION TYPES
-### Purpose: Create custom types and allow multiple types.
-```typescript
-type ID = string | number;
-let userID: ID = 101;
-```
-
-## 8. OPTIONAL & READONLY PROPERTIES
-### Purpose: Make properties optional or immutable.
-```typescript
-interface Car {
-    brand: string;
-    model: string;
-    year?: number; // Optional property
-    readonly vin: string; // Immutable property
-}
-```
-
-## 9. REACT SPECIFIC TYPESCRIPT
-### Using TypeScript with React Components
-```typescript
-type ButtonProps = {
-    label: string;
-    onClick: () => void;
-};
-
-const Button: React.FC<ButtonProps> = ({ label, onClick }) => {
-    return <button onClick={onClick}>{label}</button>;
-};
-```
-
-## 10. HOOKS WITH TYPESCRIPT
-### Typing useState & useEffect
-```typescript
-const [count, setCount] = useState<number>(0);
-
-useEffect(() => {
-    console.log("Count changed: ", count);
-}, [count]);
-```
-
-## 11. CONTEXT API WITH TYPESCRIPT
-### Creating a context with types
-```typescript
-interface ThemeContextType {
-    theme: string;
-    toggleTheme: () => void;
-}
-const ThemeContext = createContext<ThemeContextType | null>(null);
-```
-
-## 12. EVENT HANDLING
-### Typing events in React
-```typescript
-const handleClick = (event: React.MouseEvent<HTMLButtonElement>): void => {
-    console.log("Button clicked", event);
-};
-```
-
-## 13. FORM HANDLING
-### Typing form elements
-```typescript
-const handleInputChange = (event: React.ChangeEvent<HTMLInputElement>) => {
-    console.log(event.target.value);
-};
-```
-
-## 14. FETCH API WITH TYPESCRIPT
-### Making API calls with typed responses
-```typescript
-interface User {
-    id: number;
-    name: string;
-}
-
-const fetchUsers = async (): Promise<User[]> => {
-    const response = await fetch("https://api.example.com/users");
-    return response.json();
-};
-```
-
-## 15. ERROR HANDLING
-### Using try-catch with type safety
-```typescript
-try {
-    throw new Error("Something went wrong");
-} catch (error) {
-    if (error instanceof Error) {
-        console.error(error.message);
-    }
-}
-```
-
-## 16. SUMMARY TABLE
-| FEATURE | USAGE |
-|---------|------|
-| Variables | `let name: string = "Alice";` |
-| Functions | `function add(a: number, b: number): number { return a + b; }` |
-| Interfaces | `interface User { name: string; age: number; }` |
-| Classes | `class Car { constructor(public model: string) {} }` |
-| Generics | `function identity<T>(arg: T): T { return arg; }` |
-| Enums | `enum Color { Red, Green, Blue }` |
-| React Components | `const Button: React.FC<ButtonProps> = ({ label }) => { return <button>{label}</button>; }` |
-| useState Hook | `const [count, setCount] = useState<number>(0);` |
-| useEffect Hook | `useEffect(() => { console.log(count); }, [count]);` |
-| Fetch API | `const fetchUsers = async (): Promise<User[]> => { ... }` |
-| Event Handling | `const handleClick = (event: React.MouseEvent<HTMLButtonElement>) => {}` |
-
----
-This guide covers essential TypeScript concepts for frontend development, particularly with React.
+| Category                  | Topic                                      | Explanation & Syntax                                                                 |
+|---------------------------|--------------------------------------------|-------------------------------------------------------------------------------------|
+| **Frontend Frameworks**   | React with TypeScript                      | **Explanation**: Build component-based UIs using React and TypeScript.<br>**Syntax**:<br>`const App: React.FC = () => { return <div>Hello, World!</div>; };`<br>`export default App;` |
+|                           | Angular                                    | **Explanation**: A full-featured framework for building SPAs.<br>**Syntax**:<br>`@Component({ selector: 'app-root', template: `<h1>{{ title }}</h1>` }) export class AppComponent { title = 'My App'; }` |
+|                           | Vue.js with TypeScript                     | **Explanation**: A progressive framework for building UIs.<br>**Syntax**:<br>`<script lang="ts"> import { defineComponent } from 'vue'; export default defineComponent({ data() { return { message: 'Hello Vue' }; } }); </script>` |
+| **State Management**      | Redux with TypeScript                      | **Explanation**: Manage global state in React apps.<br>**Syntax**:<br>`interface AppState { counter: number; } const initialState: AppState = { counter: 0 };`<br>`const reducer = (state = initialState, action: AnyAction): AppState => { switch (action.type) { case 'INCREMENT': return { ...state, counter: state.counter + 1 }; default: return state; } };` |
+|                           | Zustand                                    | **Explanation**: A lightweight state management library.<br>**Syntax**:<br>`import create from 'zustand'; type State = { count: number; increment: () => void; }; const useStore = create<State>((set) => ({ count: 0, increment: () => set((state) => ({ count: state.count + 1 })), }));` |
+|                           | Pinia (Vue.js)                             | **Explanation**: State management for Vue.js.<br>**Syntax**:<br>`import { defineStore } from 'pinia'; export const useCounterStore = defineStore('counter', { state: () => ({ count: 0 }), actions: { increment() { this.count++; }, }, });` |
+| **Routing**               | React Router                               | **Explanation**: Handle navigation in React apps.<br>**Syntax**:<br>`import { BrowserRouter as Router, Route, Routes } from 'react-router-dom';`<br>`<Router><Routes><Route path="/" element={<Home />} /></Routes></Router>` |
+|                           | Angular Router                             | **Explanation**: Handle navigation in Angular apps.<br>**Syntax**:<br>`const routes: Routes = [{ path: '', component: HomeComponent }]; @NgModule({ imports: [RouterModule.forRoot(routes)], exports: [RouterModule], }) export class AppRoutingModule {}` |
+|                           | Vue Router                                 | **Explanation**: Handle navigation in Vue.js apps.<br>**Syntax**:<br>`import { createRouter, createWebHistory } from 'vue-router'; const routes = [{ path: '/', component: Home }]; const router = createRouter({ history: createWebHistory(), routes });` |
+| **Styling**               | CSS Modules                                | **Explanation**: Scoped CSS for components.<br>**Syntax**:<br>`import styles from './App.module.css';`<br>`<div className={styles.container}>Styled Content</div>` |
+|                           | Styled Components                          | **Explanation**: Use styled-components for dynamic styling.<br>**Syntax**:<br>`import styled from 'styled-components'; const Button = styled.button<{ primary?: boolean }>\` background: \${(props) => (props.primary ? 'blue' : 'gray')}; \`;` |
+|                           | Tailwind CSS                               | **Explanation**: Utility-first CSS framework.<br>**Syntax**:<br>`<div className="bg-blue-500 text-white p-4">Styled with Tailwind</div>` |
+| **Forms**                 | Formik                                     | **Explanation**: Simplify form handling in React.<br>**Syntax**:<br>`<Formik initialValues={{ name: '' }} onSubmit={(values) => console.log(values)}>{({ handleSubmit }) => (<form onSubmit={handleSubmit}><input name="name" /></form>)}</Formik>` |
+|                           | React Hook Form                            | **Explanation**: Efficient form handling with hooks.<br>**Syntax**:<br>`const { register, handleSubmit } = useForm(); const onSubmit = (data: any) => console.log(data);`<br>`<form onSubmit={handleSubmit(onSubmit)}><input {...register('name')} /></form>` |
+|                           | Angular Reactive Forms                     | **Explanation**: Build forms with reactive programming.<br>**Syntax**:<br>`this.form = new FormGroup({ name: new FormControl('') });`<br>`<form [formGroup]="form"><input formControlName="name" /></form>` |
+| **API Integration**       | Fetch API                                  | **Explanation**: Fetch data from APIs.<br>**Syntax**:<br>`fetch('https://api.example.com/data').then(response => response.json()).then(data => console.log(data));` |
+|                           | Axios                                      | **Explanation**: Simplify HTTP requests.<br>**Syntax**:<br>`axios.get('https://api.example.com/data').then(response => console.log(response.data));` |
+|                           | GraphQL with Apollo Client                 | **Explanation**: Query data using GraphQL.<br>**Syntax**:<br>`const GET_USERS = gql\`query { users { id name } }\`;`<br>`const { data } = useQuery(GET_USERS);` |
+| **Testing**               | Jest for Unit Testing                      | **Explanation**: Test individual components or functions.<br>**Syntax**:<br>`test('renders without crashing', () => { render(<App />); expect(screen.getByText(/hello/i)).toBeInTheDocument(); });` |
+|                           | React Testing Library                      | **Explanation**: Test React components in isolation.<br>**Syntax**:<br>`render(<App />); fireEvent.click(screen.getByText('Click Me')); expect(screen.getByText('Clicked')).toBeInTheDocument();` |
+|                           | Cypress for E2E Testing                    | **Explanation**: Perform end-to-end testing.<br>**Syntax**:<br>`describe('My First Test', () => { it('Visits the app', () => { cy.visit('/'); cy.contains('Hello'); }); });` |
+| **Performance Optimization** | Lazy Loading Components                | **Explanation**: Load components only when needed.<br>**Syntax**:<br>`const LazyComponent = React.lazy(() => import('./LazyComponent'));`<br>`<React.Suspense fallback={<div>Loading...</div>}><LazyComponent /></React.Suspense>` |
+|                           | Code Splitting                            | **Explanation**: Split code into smaller chunks.<br>**Syntax**:<br>`import('./module').then(module => module.doSomething());` |
+| **Accessibility**         | ARIA Attributes                            | **Explanation**: Improve accessibility with ARIA roles.<br>**Syntax**:<br>`<button aria-label="Close" onClick={() => console.log('Closed')}>X</button>` |
+|                           | Focus Management                           | **Explanation**: Manage focus for better UX.<br>**Syntax**:<br>`const inputRef = useRef<HTMLInputElement>(null); useEffect(() => { inputRef.current?.focus(); }, []);`<br>`<input ref={inputRef} />` |
+| **Animations**            | Framer Motion                              | **Explanation**: Add animations to components.<br>**Syntax**:<br>`import { motion } from 'framer-motion';`<br>`<motion.div animate={{ x: 100 }}>Animated Div</motion.div>` |
+|                           | CSS Transitions                            | **Explanation**: Use CSS for simple animations.<br>**Syntax**:<br>`<div className="transition duration-300 hover:scale-110">Hover Me</div>` |
+| **Internationalization**  | i18next                                    | **Explanation**: Add multilingual support.<br>**Syntax**:<br>`import i18n from 'i18next'; i18n.init({ resources: { en: { translation: { welcome: 'Welcome' } } } });`<br>`t('welcome')` |
+|                           | React Intl                                 | **Explanation**: Internationalize React apps.<br>**Syntax**:<br>`<FormattedMessage id="welcome" defaultMessage="Hello, {name}" values={{ name: 'John' }} />` |
+| **Error Handling**        | Error Boundaries                           | **Explanation**: Catch errors in React components.<br>**Syntax**:<br>`class ErrorBoundary extends React.Component { componentDidCatch(error: Error) { console.error(error); } render() { return this.props.children; } }` |
+|                           | Global Error Handling                      | **Explanation**: Handle errors globally.<br>**Syntax**:<br>`window.onerror = (message, source, lineno, colno, error) => { console.error(error); };` |
+| **Deployment**            | Vercel Deployment                          | **Explanation**: Deploy frontend apps to Vercel.<br>**Syntax**:<br>`vercel deploy` |
+|                           | Netlify Deployment                         | **Explanation**: Deploy frontend apps to Netlify.<br>**Syntax**:<br>`netlify deploy --prod` |
+|                           | Dockerizing a Frontend App                 | **Explanation**: Containerize your app for deployment.<br>**Syntax**:<br>`FROM node:16-alpine`<br>`COPY . /app`<br>`RUN npm install && npm run build`<br>`CMD ["npm", "start"]` |

@@ -1,163 +1,49 @@
-# TYPESCRIPT SYNTAX REFERENCE FOR BACKEND DEVELOPMENT
+# TypeScript Topics for Backend Development
 
-## VARIABLES AND DATA TYPES
-```typescript
-let name: string = "John";
-const age: number = 30;
-let isActive: boolean = true;
-let skills: string[] = ["TypeScript", "Node.js"];
-let user: { id: number; name: string } = { id: 1, name: "Alice" };
-```
-
-## FUNCTIONS
-```typescript
-function add(a: number, b: number): number {
-  return a + b;
-}
-
-const multiply = (a: number, b: number): number => a * b;
-```
-
-## CLASSES
-```typescript
-class User {
-  private id: number;
-  public name: string;
-
-  constructor(id: number, name: string) {
-    this.id = id;
-    this.name = name;
-  }
-
-  getDetails(): string {
-    return `ID: ${this.id}, Name: ${this.name}`;
-  }
-}
-
-const user1 = new User(1, "Alice");
-console.log(user1.getDetails());
-```
-
-## INTERFACES
-```typescript
-interface Employee {
-  id: number;
-  name: string;
-  department?: string; // Optional property
-}
-
-const emp: Employee = { id: 1, name: "Bob" };
-```
-
-## ENUMS
-```typescript
-enum Role {
-  ADMIN,
-  USER,
-  GUEST,
-}
-let userRole: Role = Role.ADMIN;
-```
-
-## MODULES AND IMPORT/EXPORT
-```typescript
-// user.ts
-export class User {
-  constructor(public id: number, public name: string) {}
-}
-
-// main.ts
-import { User } from "./user";
-const newUser = new User(2, "Charlie");
-```
-
-## ASYNC/AWAIT & PROMISES
-```typescript
-async function fetchData(): Promise<string> {
-  return new Promise((resolve) => {
-    setTimeout(() => resolve("Data received"), 2000);
-  });
-}
-
-fetchData().then((data) => console.log(data));
-```
-
-## ERROR HANDLING
-```typescript
-try {
-  throw new Error("Something went wrong");
-} catch (error) {
-  console.error(error.message);
-} finally {
-  console.log("Cleanup actions");
-}
-```
-
-## NODE.JS EXPRESS SERVER
-```typescript
-import express, { Request, Response } from "express";
-
-const app = express();
-app.use(express.json());
-
-app.get("/", (req: Request, res: Response) => {
-  res.send("Hello, TypeScript with Node.js!");
-});
-
-app.listen(3000, () => {
-  console.log("Server running on port 3000");
-});
-```
-
-## DATABASE CONNECTION (MONGODB EXAMPLE)
-```typescript
-import mongoose from "mongoose";
-
-mongoose.connect("mongodb://localhost:27017/mydb", { useNewUrlParser: true, useUnifiedTopology: true })
-  .then(() => console.log("Connected to MongoDB"))
-  .catch((err) => console.error("Error connecting to DB", err));
-```
-
-## GENERICS
-```typescript
-function identity<T>(arg: T): T {
-  return arg;
-}
-
-console.log(identity<number>(10));
-console.log(identity<string>("Hello"));
-```
-
-## DECORATORS (USED IN NESTJS)
-```typescript
-function Log(target: any, key: string) {
-  console.log(`${key} was called`);
-}
-
-class Demo {
-  @Log
-  greet() {
-    console.log("Hello");
-  }
-}
-```
-
-## SUMMARY TABLE
-
-| FEATURE            | SYNTAX EXAMPLE |
-|--------------------|---------------|
-| **Variables**      | `let name: string = "John";` |
-| **Functions**      | `function add(a: number, b: number): number { return a + b; }` |
-| **Arrow Functions** | `const multiply = (a: number, b: number): number => a * b;` |
-| **Classes**        | `class User { constructor(public id: number, public name: string) {} }` |
-| **Interfaces**     | `interface Employee { id: number; name: string; department?: string; }` |
-| **Enums**         | `enum Role { ADMIN, USER, GUEST }` |
-| **Modules**        | `export class User { ... }` (in `user.ts`), `import { User } from "./user";` (in `main.ts`) |
-| **Async/Await**    | `async function fetchData(): Promise<string> { return "Data"; }` |
-| **Error Handling** | `try { throw new Error("Error!"); } catch (err) { console.log(err.message); }` |
-| **Express Server** | `app.get("/", (req, res) => res.send("Hello!"));` |
-| **MongoDB Connection** | `mongoose.connect("mongodb://localhost:27017/mydb")` |
-| **Generics**       | `function identity<T>(arg: T): T { return arg; }` |
-| **Decorators**     | `@Log greet() { console.log("Hello"); }` |
-
-This reference covers the key TypeScript features used in backend development with Node.js, Express, and MongoDB.
+| Category                  | Topic                                      | Explanation & Syntax                                                                 |
+|---------------------------|--------------------------------------------|-------------------------------------------------------------------------------------|
+| **Backend Frameworks**    | Express.js with TypeScript                 | **Explanation**: Use Express.js with TypeScript to build RESTful APIs.<br>**Syntax**:<br>`import express, { Request, Response } from 'express';`<br>`const app = express();`<br>`app.get('/', (req: Request, res: Response) => { res.send('Hello World'); });`<br>`app.listen(3000, () => console.log('Server running on port 3000'));` |
+|                           | NestJS                                     | **Explanation**: A robust framework for building scalable backend applications.<br>**Syntax**:<br>`@Controller('users')`<br>`export class UserController {`<br>`  @Get(':id')`<br>`  findOne(@Param('id') id: string): string { return \`User \${id}\`; }`<br>`}` |
+|                           | Fastify                                    | **Explanation**: A fast and low-overhead web framework.<br>**Syntax**:<br>`const fastify = require('fastify')({ logger: true });`<br>`fastify.get('/', async (request, reply) => { return { hello: 'world' }; });`<br>`fastify.listen({ port: 3000 }, (err) => { if (err) throw err; });` |
+| **Routing**               | Defining Routes                            | **Explanation**: Define routes to handle HTTP requests.<br>**Syntax**:<br>`app.get('/users', (req: Request, res: Response) => { res.send(users); });` |
+|                           | Route Parameters                           | **Explanation**: Extract dynamic values from URLs.<br>**Syntax**:<br>`app.get('/users/:id', (req: Request, res: Response) => { const id = req.params.id; res.send(\`User ID: \${id}\`); });` |
+|                           | Query Parameters                           | **Explanation**: Extract query strings from URLs.<br>**Syntax**:<br>`app.get('/search', (req: Request, res: Response) => { const query = req.query.q; res.send(\`Search Query: \${query}\`); });` |
+| **Middleware**            | Custom Middleware                          | **Explanation**: Create reusable functions to process requests.<br>**Syntax**:<br>`const logger = (req: Request, res: Response, next: NextFunction) => { console.log(req.url); next(); };`<br>`app.use(logger);` |
+|                           | Error Handling Middleware                  | **Explanation**: Handle errors globally.<br>**Syntax**:<br>`app.use((err: Error, req: Request, res: Response, next: NextFunction) => { res.status(500).send(err.message); });` |
+|                           | Authentication Middleware                  | **Explanation**: Protect routes using authentication.<br>**Syntax**:<br>`app.use(passport.authenticate('jwt', { session: false }));` |
+| **Database Integration**  | TypeORM                                    | **Explanation**: An ORM for TypeScript to interact with databases.<br>**Syntax**:<br>`@Entity()`<br>`export class User {`<br>`  @PrimaryGeneratedColumn() id: number;`<br>`  @Column() name: string;`<br>`}` |
+|                           | Mongoose with TypeScript                   | **Explanation**: A MongoDB ODM for TypeScript.<br>**Syntax**:<br>`interface IUser { name: string; age: number; }`<br>`const UserSchema = new Schema<IUser>({ name: String, age: Number });`<br>`const UserModel = mongoose.model<IUser>('User', UserSchema);` |
+|                           | Prisma                                     | **Explanation**: A modern ORM for TypeScript.<br>**Syntax**:<br>`model User {`<br>`  id Int @id @default(autoincrement())`<br>`  name String`<br>`}`<br>`const user = await prisma.user.create({ data: { name: 'John' } });` |
+|                           | Sequelize                                  | **Explanation**: Another ORM for TypeScript.<br>**Syntax**:<br>`class User extends Model<UserAttributes> implements UserAttributes {`<br>`  @Column name!: string;`<br>`}` |
+| **API Design**            | RESTful APIs                               | **Explanation**: Build APIs following REST principles.<br>**Syntax**:<br>`app.post('/users', (req: Request, res: Response) => { const user = req.body; res.status(201).send(user); });` |
+|                           | GraphQL with Apollo Server                 | **Explanation**: Build flexible APIs using GraphQL.<br>**Syntax**:<br>`const typeDefs = gql\`type Query { hello: String }\`;`<br>`const resolvers = { Query: { hello: () => 'world' } };`<br>`const server = new ApolloServer({ typeDefs, resolvers });` |
+|                           | gRPC                                       | **Explanation**: Build high-performance APIs using gRPC.<br>**Syntax**:<br>`service Greeter { rpc SayHello (HelloRequest) returns (HelloReply); }`<br>`message HelloRequest { string name = 1; }` |
+| **Authentication & Authorization** | JWT Authentication                    | **Explanation**: Secure APIs using JSON Web Tokens.<br>**Syntax**:<br>`const token = jwt.sign({ userId: user.id }, 'secretKey', { expiresIn: '1h' });`<br>`const decoded = jwt.verify(token, 'secretKey');` |
+|                           | OAuth2                                     | **Explanation**: Implement third-party authentication.<br>**Syntax**:<br>`passport.use(new OAuth2Strategy({ ... }, (accessToken, refreshToken, profile, done) => { ... }));` |
+|                           | Role-Based Access Control (RBAC)           | **Explanation**: Restrict access based on user roles.<br>**Syntax**:<br>`if (user.role === 'admin') { /* allow access */ }` |
+| **Error Handling**        | Custom Error Classes                       | **Explanation**: Create reusable error classes.<br>**Syntax**:<br>`class HttpException extends Error { constructor(public status: number, message: string) { super(message); } }`<br>`throw new HttpException(404, 'Not Found');` |
+|                           | Global Error Handling                      | **Explanation**: Centralize error handling logic.<br>**Syntax**:<br>`app.use((err: HttpException, req: Request, res: Response, next: NextFunction) => { res.status(err.status || 500).send(err.message); });` |
+| **Validation**            | Class Validator (NestJS)                   | **Explanation**: Validate request payloads using decorators.<br>**Syntax**:<br>`@IsString() name: string;`<br>`@IsEmail() email: string;` |
+|                           | Zod Validation                             | **Explanation**: Validate data using Zod schemas.<br>**Syntax**:<br>`const schema = z.object({ name: z.string(), age: z.number() });`<br>`const result = schema.parse({ name: 'John', age: 30 });` |
+|                           | Joi Validation                             | **Explanation**: Validate data using Joi schemas.<br>**Syntax**:<br>`const schema = Joi.object({ name: Joi.string().required() });`<br>`const { error } = schema.validate({ name: 'John' });` |
+| **Testing**               | Unit Testing with Jest                     | **Explanation**: Test individual functions or modules.<br>**Syntax**:<br>`test('should return 200', async () => { const response = await request(app).get('/'); expect(response.status).toBe(200); });` |
+|                           | Integration Testing                        | **Explanation**: Test interactions between components.<br>**Syntax**:<br>`test('GET /users', async () => { const response = await request(app).get('/users'); expect(response.body).toHaveLength(2); });` |
+|                           | End-to-End Testing                         | **Explanation**: Test the entire application flow.<br>**Syntax**:<br>`test('E2E test', async () => { await page.goto('http://localhost:3000'); expect(await page.title()).toBe('My App'); });` |
+| **Logging**               | Winston Logger                             | **Explanation**: Log application events for debugging.<br>**Syntax**:<br>`const logger = winston.createLogger({ level: 'info', format: winston.format.json(), transports: [new winston.transports.Console()] });`<br>`logger.info('Server started');` |
+|                           | Pino Logger                                | **Explanation**: A lightweight logger for Node.js.<br>**Syntax**:<br>`const logger = pino(); logger.info('Server started');` |
+| **Caching**               | Redis with TypeScript                      | **Explanation**: Use Redis for caching data.<br>**Syntax**:<br>`const redis = new Redis(); redis.set('key', 'value');`<br>`const value = await redis.get('key');` |
+|                           | In-Memory Caching                          | **Explanation**: Cache data in memory for quick access.<br>**Syntax**:<br>`const cache: Record<string, any> = {}; cache['key'] = 'value';` |
+| **File Uploads**          | Multer for File Uploads                    | **Explanation**: Handle file uploads in Express.<br>**Syntax**:<br>`const upload = multer({ dest: 'uploads/' });`<br>`app.post('/upload', upload.single('file'), (req, res) => { res.send(req.file); });` |
+|                           | AWS S3 Integration                         | **Explanation**: Store files in AWS S3.<br>**Syntax**:<br>`const s3 = new AWS.S3();`<br>`s3.upload({ Bucket: 'bucket-name', Key: 'file.txt', Body: fileData });` |
+| **Real-Time Communication** | WebSockets with Socket.IO              | **Explanation**: Enable real-time communication.<br>**Syntax**:<br>`io.on('connection', (socket) => { socket.on('message', (msg) => { io.emit('message', msg); }); });` |
+|                           | Server-Sent Events (SSE)                   | **Explanation**: Push updates to clients over HTTP.<br>**Syntax**:<br>`res.setHeader('Content-Type', 'text/event-stream');`<br>`res.write(`data: ${JSON.stringify(data)}\n\n`);` |
+| **Environment Variables** | Dotenv                                     | **Explanation**: Load environment variables from `.env` files.<br>**Syntax**:<br>`require('dotenv').config();`<br>`const port = process.env.PORT || 3000;` |
+|                           | Config Management                          | **Explanation**: Manage configuration settings.<br>**Syntax**:<br>`export const config = { dbUrl: process.env.DB_URL, port: parseInt(process.env.PORT || '3000') };` |
+| **Security**              | Helmet for Security Headers                | **Explanation**: Add security headers to HTTP responses.<br>**Syntax**:<br>`app.use(helmet());` |
+|                           | CORS                                       | **Explanation**: Allow cross-origin requests.<br>**Syntax**:<br>`app.use(cors({ origin: 'https://example.com' }));` |
+|                           | Rate Limiting                              | **Explanation**: Prevent abuse by limiting requests.<br>**Syntax**:<br>`app.use(rateLimit({ windowMs: 15 * 60 * 1000, max: 100 }));` |
+| **Performance Optimization** | Compression Middleware                | **Explanation**: Compress responses to reduce size.<br>**Syntax**:<br>`app.use(compression());` |
+|                           | Lazy Loading Routes                        | **Explanation**: Load routes dynamically to improve performance.<br>**Syntax**:<br>`app.use('/api/v1', lazy(() => import('./routes/v1')));` |
+| **Deployment**            | Dockerizing a TypeScript App               | **Explanation**: Containerize your app for deployment.<br>**Syntax**:<br>`FROM node:16-alpine`<br>`COPY . /app`<br>`RUN npm install`<br>`CMD ["node", "dist/index.js"]` |
+|                           | PM2 Process Manager                        | **Explanation**: Manage Node.js processes in production.<br>**Syntax**:<br>`pm2 start dist/index.js --name "my-app"` |
+|                           | CI/CD Pipelines                            | **Explanation**: Automate builds and deployments.<br>**Syntax**:<br>`jobs:`<br>`  build:`<br>`    runs-on: ubuntu-latest`<br>`    steps:`<br>`      - uses: actions/checkout@v2`<br>`      - run: npm install`<br>`      - run: npm run build` |

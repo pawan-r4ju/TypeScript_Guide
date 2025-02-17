@@ -500,3 +500,4 @@
   ```
 
 ---
+check fullstack guide folder
